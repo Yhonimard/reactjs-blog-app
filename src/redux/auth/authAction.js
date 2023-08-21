@@ -21,8 +21,21 @@ const authRequest = () => {
     };
   };
 
+  const login = (data) => {
+    return async () => {
+      try {
+        await api.request.post("/auth/login", data).catch((error) => {
+          console.log(error);
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  };
+
   return {
     register,
+    login,
   };
 };
 export default authRequest;

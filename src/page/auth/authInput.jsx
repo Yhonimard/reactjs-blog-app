@@ -1,10 +1,13 @@
 import { InputAdornment, TextField } from "@mui/material";
 
 // eslint-disable-next-line react/prop-types
-const AuthInput = ({ children, label, type, register, name }) => {
+const AuthInput = ({ children, label, type, register, name, error }) => {
+  const isError = Boolean(error);
   return (
     <>
       <TextField
+        error={isError}
+        helperText={error}
         size="small"
         type={type || `text`}
         margin="dense"

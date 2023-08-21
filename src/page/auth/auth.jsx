@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { AccountCircle } from "@mui/icons-material";
+import { AccountCircle, Key, Password } from "@mui/icons-material";
 import { Box, Button, FormControl, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { Link, useSearchParams } from "react-router-dom";
@@ -16,7 +16,7 @@ const Auth = () => {
   const dispatch = useDispatch();
 
   const schema = authSchema(isLogin);
-  const { register: authRegister } = authRequest();
+  const { register: authRegister, login } = authRequest();
 
   const {
     register,
@@ -26,14 +26,12 @@ const Auth = () => {
     resolver: yupResolver(schema),
   });
 
-  console.log("env = ", import.meta.env.VITE_API_URL);
-
   const onSubmit = (data) => {
     if (!isLogin) {
       dispatch(authRegister(data));
     }
-    if(isLogin) {
-      dispatch
+    if (isLogin) {
+      dispatch(login(data));
     }
   };
 
@@ -49,7 +47,12 @@ const Auth = () => {
             sx={{ width: "100%" }}
             component={`form`}
           >
-            <AuthInput label={`username`} register={register} name={`username`}>
+            <AuthInput
+              label={`username`}
+              register={register}
+              name={`username`}
+              error={errors.username?.message}
+            >
               <AccountCircle />
             </AuthInput>
             <AuthInput
@@ -57,8 +60,9 @@ const Auth = () => {
               type={`password`}
               register={register}
               name={`password`}
+              error={errors.password?.message}
             >
-              <AccountCircle />
+              <Key />
             </AuthInput>
             {!isLogin && (
               <AuthInput
@@ -66,8 +70,9 @@ const Auth = () => {
                 type={`password`}
                 register={register}
                 name={`confirmPassword`}
+                error={errors.confirmPassword?.message}
               >
-                <AccountCircle />
+                <Password />
               </AuthInput>
             )}
             <Button
