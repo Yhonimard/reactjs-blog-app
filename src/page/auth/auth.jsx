@@ -6,10 +6,17 @@ import { Link, useSearchParams } from "react-router-dom";
 import AuthInput from "./authInput";
 import authSchema from "./authSchema";
 import { AuthFormWrapper, AuthWrapper } from "./styled";
+import authRequest from "../../redux/auth/authAction";
+import { useDispatch } from "react-redux";
 
 const Auth = () => {
   const [searchParams] = useSearchParams();
-  const schema = authSchema();
+  const isLogin = searchParams.get("mode") === "login";
+
+  const dispatch = useDispatch();
+
+  const schema = authSchema(isLogin);
+  const { register: authRegister } = authRequest();
 
   const {
     register,
@@ -19,12 +26,15 @@ const Auth = () => {
     resolver: yupResolver(schema),
   });
 
-  const isLogin = searchParams.get("mode") === "login";
-
-  console.log(errors);
+  console.log("env = ", import.meta.env.VITE_API_URL);
 
   const onSubmit = (data) => {
-    console.log(data);
+    if (!isLogin) {
+      dispatch(authRegister(data));
+    }
+    if(isLogin) {
+      dispatch
+    }
   };
 
   return (
