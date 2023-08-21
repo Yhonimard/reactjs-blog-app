@@ -1,6 +1,7 @@
 import { Box, Modal, styled } from "@mui/material";
 
 const StyledModal = styled(Modal)(({ theme }) => ({
+  color: theme.palette.text.primary,
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -17,7 +18,7 @@ const InnerModalWrap = styled(Box)(({ theme }) => ({
   padding: 10,
 
   [theme.breakpoints.down("lg")]: {
-    minWidth: "50%"
+    minWidth: "50%",
   },
   [theme.breakpoints.down("lg")]: {
     width: "40%",

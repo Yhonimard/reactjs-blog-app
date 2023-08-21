@@ -6,6 +6,7 @@ const AuthWrapper = styled(Container)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
+  backgroundColor: "background.default",
 }));
 
 const AuthFormWrapper = styled(Paper)(({ theme }) => ({

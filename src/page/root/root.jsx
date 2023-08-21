@@ -1,15 +1,21 @@
 import { Outlet } from "react-router-dom";
 import { Box } from "@mui/material";
-import Add from "../../component/addPost/add";
-import Navbar from "../../component/navbar/navbar";
+import AddButton from "../../component/addButton";
+
+import Navbar from "./navbar";
 const Root = () => {
   return (
     <>
       <Navbar />
-      <Box component="main" paddingTop={8}>
+      <Box
+        component="main"
+        paddingTop={8}
+        bgcolor="background.default"
+        color="text.primary"
+      >
         <Outlet />
       </Box>
-      <Add />
+      <AddButton />
     </>
   );
 };

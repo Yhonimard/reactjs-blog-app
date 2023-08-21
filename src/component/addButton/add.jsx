@@ -6,7 +6,7 @@ import {
   Stack,
   TextField,
   Tooltip,
-  Typography
+  Typography,
 } from "@mui/material";
 import { useState } from "react";
 import { InnerModalWrap, StyledModal, UserBox } from "./styled";
