@@ -12,6 +12,7 @@ const Root = () => {
         paddingTop={8}
         bgcolor="background.default"
         color="text.primary"
+        minHeight="100vh"
       >
         <Outlet />
       </Box>
