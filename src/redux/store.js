@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import rootPersist from "./persist/rootPersist";
-import authPersist from "./persist/authPersist";
+import rootPersist from "./persist/root.persist";
+import authPersist from "./persist/auth.persist";
 import { PERSIST } from "redux-persist";
 
 const store = configureStore({
   reducer: {
     // rootPersist,
-    authPersist,
+    auth: authPersist,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

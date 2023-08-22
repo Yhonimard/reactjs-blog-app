@@ -2,12 +2,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { AccountCircle, Key, Password } from "@mui/icons-material";
 import { Box, Button, FormControl, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { Link, useSearchParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import auth from "../../redux/auth";
 import AuthInput from "./authInput";
 import authSchema from "./authSchema";
 import { AuthFormWrapper, AuthWrapper } from "./styled";
-import authRequest from "../../redux/auth/authAction";
-import { useDispatch } from "react-redux";
 
 const Auth = () => {
   const [searchParams] = useSearchParams();
@@ -16,7 +16,8 @@ const Auth = () => {
   const dispatch = useDispatch();
 
   const schema = authSchema(isLogin);
-  const { register: authRegister, login } = authRequest();
+
+  const navigate = useNavigate();
 
   const {
     register,
@@ -26,12 +27,18 @@ const Auth = () => {
     resolver: yupResolver(schema),
   });
 
+  const authState = useSelector((state) => state.auth);
+
+  console.log(authState);
+
   const onSubmit = (data) => {
     if (!isLogin) {
-      dispatch(authRegister(data));
+      dispatch(auth.request.register(data));
+      authState.isSuccess && navigate("?mode=login");
     }
     if (isLogin) {
-      dispatch(login(data));
+      dispatch(auth.request.login(data));
+      authState.data.isLogin && navigate("/");
     }
   };
 
