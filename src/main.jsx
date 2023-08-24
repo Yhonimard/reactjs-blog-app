@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 import redux from "./redux";
+import { SnackbarProvider } from "notistack";
 
 const theme = createTheme({
   palette: {
@@ -17,9 +18,15 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={redux.store}>
     <PersistGate persistor={redux.persistor}>
       <CssBaseline />
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
+      <SnackbarProvider
+        autoHideDuration={2000}
+        maxSnack={1}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
+      </SnackbarProvider>
     </PersistGate>
   </Provider>
 );

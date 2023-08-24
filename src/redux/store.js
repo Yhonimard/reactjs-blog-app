@@ -7,6 +7,7 @@ const store = configureStore({
   reducer: {
     // rootPersist,
     auth: authPersist,
+    root: rootPersist,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

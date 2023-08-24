@@ -1,6 +1,13 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { AccountCircle, Key, Password } from "@mui/icons-material";
-import { Box, Button, FormControl, Typography } from "@mui/material";
+import {
+  Backdrop,
+  Box,
+  Button,
+  CircularProgress,
+  FormControl,
+  Typography,
+} from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
@@ -16,7 +23,6 @@ const Auth = () => {
   const dispatch = useDispatch();
 
   const schema = authSchema(isLogin);
-
   const navigate = useNavigate();
 
   const {
@@ -29,16 +35,17 @@ const Auth = () => {
 
   const authState = useSelector((state) => state.auth);
 
-  console.log(authState);
-
   const onSubmit = (data) => {
     if (!isLogin) {
-      dispatch(auth.request.register(data));
-      authState.isSuccess && navigate("?mode=login");
+      dispatch(auth.request.register(data)).then((data) => {
+        if (!data.error) navigate("?mode=login");
+      });
     }
+
     if (isLogin) {
-      dispatch(auth.request.login(data));
-      authState.data.isLogin && navigate("/");
+      dispatch(auth.request.login(data)).then((data) => {
+        if (!data.error) navigate("/");
+      });
     }
   };
 
@@ -103,6 +110,9 @@ const Auth = () => {
           </FormControl>
         </AuthFormWrapper>
       </AuthWrapper>
+      <Backdrop open={authState.isLoading}>
+        <CircularProgress />
+      </Backdrop>
     </Box>
   );
 };
