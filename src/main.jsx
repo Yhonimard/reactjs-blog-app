@@ -9,7 +9,12 @@ import { SnackbarProvider } from "notistack";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={redux.store}>
     <PersistGate persistor={redux.persistor}>
-      <SnackbarProvider maxSnack={1} autoHideDuration={3000}>
+      <SnackbarProvider
+        maxSnack={2}
+        autoHideDuration={2000}
+        preventDuplicate
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
         <App />
       </SnackbarProvider>
     </PersistGate>

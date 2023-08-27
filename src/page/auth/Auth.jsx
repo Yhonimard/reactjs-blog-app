@@ -1,13 +1,18 @@
-import { useSearchParams } from "react-router-dom";
-import AuthForm from "./Form";
-import { useForm } from "react-hook-form";
-import { useCallback } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import auth from "../../redux/auth";
+import AuthForm from "./Form";
 import authFormValidation from "./validation";
 
 const Auth = () => {
   const [searchParams] = useSearchParams();
   const isLoginUrl = searchParams.get("mode") == "login";
+
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const schema = authFormValidation(isLoginUrl);
 
@@ -19,8 +24,16 @@ const Auth = () => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (e) => {
-    console.log(e);
+  const onSubmit = (data) => {
+    if (isLoginUrl) {
+      dispatch(auth.request.login(data)).then((data) => {
+        if (!data.error) navigate("/");
+      });
+    }
+
+    if (!isLoginUrl) {
+      dispatch(auth.request.register(data));
+    }
   };
 
   return (
